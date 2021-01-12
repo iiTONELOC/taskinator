@@ -204,6 +204,7 @@ var dropZoneDragHandler = function(event) {
     var taskListE1 =  event.target.closest(".task-list");
     if (taskListE1) {
         event.preventDefault();
+        taskListE1.setAttribute("style", "background: rgba(68, 233, 255, 0.7); border-style: dashed;");
         
     }
 }
@@ -225,7 +226,16 @@ var dropTaskHandler = function(event) {
     else if (statusType === "tasks-completed") {
         statusSelectE1.selectedIndex = 2;
     }
+    dropZoneE1.removeAttribute("style");
     dropZoneE1.appendChild(draggableElement);
+}
+
+// on drag-drop
+var dragLeaveHandler = function(event){
+    var taskListE1 = event.target.closest(".task-list");
+    if (taskListE1) {
+        taskListE1.removeAttribute("style");
+    }
 }
 pageContentE1.addEventListener("click", taskButtonHandler);
 
@@ -236,4 +246,6 @@ pageContentE1.addEventListener("dragstart", dragTaskHandler);
 pageContentE1.addEventListener("dragover", dropZoneDragHandler);
 
 pageContentE1.addEventListener("drop", dropTaskHandler);
+
+pageContentE1.addEventListener("dragleave",dragLeaveHandler);
 
