@@ -3,6 +3,8 @@ var formE1 = document.querySelector("#task-form");
 var tasksToDoE1 = document.querySelector("#tasks-to-do");
 var taskIdCounter = 0;
 var pageContentE1 = document.querySelector("#page-content");
+var taskInProgressE1 = document.querySelector("#tasks-in-progress");
+var tasksCompletedE1 = document.querySelector("#tasks-completed");
 
 
 //CompleteEdit function
@@ -108,7 +110,7 @@ var createTaskActions = function(taskId) {
     statusSelectE1.className = "select-status";
     statusSelectE1.setAttribute("name", "status-change");
     statusSelectE1.setAttribute("data-task-id", taskId);
-    var statusChoices = ["TO DO", "In-Progress", "Completed"];
+    var statusChoices = ["TO DO", "In Progress", "Completed"];
 
     for (var i = 0; i < statusChoices.length; i++) {
         //create option element
@@ -164,5 +166,30 @@ var taskButtonHandler = function(event){
     }
 };
 
+//status update handler
+var taskStatusChangeHandler = function(event) {
+    // get the task item's id
+    var taskId = event.target.getAttribute("data-task-id");
+
+    // get the currently selected options value and convert to lowercase
+    var statusValue = event.target.value.toLowerCase();
+
+    // find the parent task item element based on the id
+    var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+
+    if (statusValue === "to do"){
+        tasksToDoE1.appendChild(taskSelected);
+    }
+    else if (statusValue === "in progress") {
+        taskInProgressE1.appendChild(taskSelected);
+    }
+    else if (statusValue === "completed") {
+        tasksCompletedE1.appendChild(taskSelected);
+    }
+
+};
+
 pageContentE1.addEventListener("click", taskButtonHandler);
+
+pageContentE1.addEventListener("change", taskStatusChangeHandler);
 
