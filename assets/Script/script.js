@@ -24,6 +24,7 @@ for (var i = 0; i < tasks.length; i++) {
         tasks[i].type = taskType;
     }
 };
+saveTasks();
 
 
 
@@ -69,6 +70,7 @@ var taskFormHandler = function(event){
     };
     createTaskE1(taskDataObj);
     }
+    
 }
 
 //function to create new task
@@ -90,6 +92,7 @@ taskInfoEl.innerHTML = "<h3 class='task-name'>" + taskDataObj.name + "</h3><span
 listItemEl.appendChild(taskInfoEl);
 taskDataObj.id=taskIdCounter;
 tasks.push(taskDataObj);
+saveTasks();
 
 var taskActionsE1 = createTaskActions(taskIdCounter);
 listItemEl.appendChild(taskActionsE1);
@@ -161,7 +164,7 @@ for (var i = 0; i < tasks.length; i++) {
 
 // reassign tasks array to be the same as updatedTaskArr
 tasks = updatedTaskArr;
-
+saveTasks();
 };
 
 var editTask = function(taskId) {
@@ -222,7 +225,7 @@ for (var i = 0; i < tasks.length; i++) {
         tasks[i].status = statusValue;
     }
     }
-
+saveTasks();
 };
 
 //drag function
@@ -269,6 +272,7 @@ for (var i = 0; i < tasks.length; i++) {
         tasks[i].status = statusSelectEl.value.toLowerCase();
     }
     }
+    saveTasks();
 }
 
 // on drag-drop
@@ -278,6 +282,13 @@ var dragLeaveHandler = function(event){
         taskListE1.removeAttribute("style");
     }
 }
+
+//save tasks
+var saveTasks =function(){
+localStorage.setItem("tasks", JSON.stringify(tasks));
+}
+
+//event listeners
 pageContentE1.addEventListener("click", taskButtonHandler);
 
 pageContentE1.addEventListener("change", taskStatusChangeHandler);
